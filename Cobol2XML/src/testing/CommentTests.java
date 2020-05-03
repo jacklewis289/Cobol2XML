@@ -8,6 +8,8 @@ import parse.Parser;
 import parse.tokens.TokenAssembly;
 import parse.tokens.Tokenizer;
 
+import static org.junit.Assert.assertEquals;
+
 public class CommentTests {
 
     @Test
@@ -19,6 +21,7 @@ public class CommentTests {
         Assembly out = p.bestMatch(in);
         Cobol c = new Cobol();
         c = (Cobol) out.getTarget();
+        assertEquals(c.getCommentLine(), "convert from base to dicimal system");
     }
 
 

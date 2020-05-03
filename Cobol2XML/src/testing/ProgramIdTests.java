@@ -10,18 +10,18 @@ import parse.tokens.Tokenizer;
 
 import static org.junit.Assert.assertEquals;
 
-public class ConstantTests {
+public class ProgramIdTests {
 
     @Test
-    public void testConstant() {
+    public void testDivisionId() {
         Tokenizer t = CobolParser.tokenizer();
         Parser p = CobolParser.start();
-        t.setString("88  base_2                          value 2.");
+        t.setString("program-id.  base.");
         Assembly in = new TokenAssembly(t);
         Assembly out = p.bestMatch(in);
         Cobol c = new Cobol();
         c = (Cobol) out.getTarget();
-        assertEquals(c.getConstantName(), "base_2");
+        assertEquals(c.getProgram_id(), "base");
     }
 
 
