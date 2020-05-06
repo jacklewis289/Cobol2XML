@@ -34,6 +34,7 @@ public class Cobol implements PubliclyCloneable {
 	protected String constantName;
 	protected double constantValue;
 	protected int lineNumber = 0;
+	protected String remarks;
 
 
 
@@ -261,6 +262,14 @@ public class Cobol implements PubliclyCloneable {
 
 	public void setLineNumber(int lineNumber) {
 		this.lineNumber = lineNumber;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 
 	/**

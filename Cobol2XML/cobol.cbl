@@ -1,9 +1,7 @@
 identification division.
 program-id.  base.
 date-written.  07-mar-1995 - mb.
-remarks.
-     This program convert a value of a generic system base to a numeric value
-     and viceversa.
+remarks. This program convert a value of a generic system base to a numeric value and viceversa.
 data division.
 working-storage section.
 77  ind                                 pic 99 comp-x.

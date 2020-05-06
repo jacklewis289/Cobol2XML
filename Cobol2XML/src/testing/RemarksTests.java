@@ -7,20 +7,21 @@ import parse.Assembly;
 import parse.Parser;
 import parse.tokens.TokenAssembly;
 import parse.tokens.Tokenizer;
+
 import static org.junit.Assert.assertEquals;
 
-public class CommentTests {
+public class RemarksTests {
 
     @Test
     public void testComments() {
         Tokenizer tokenizer = CobolParser.tokenizer();
         Parser parser = CobolParser.start();
-        tokenizer.setString("***---  convert from base to decimal system");
+        tokenizer.setString("remarks. This program convert a value of a generic system base to a numeric value and viceversa .");
         Assembly in = new TokenAssembly(tokenizer);
         Assembly out = parser.bestMatch(in);
         Cobol cobol;
         cobol = (Cobol) out.getTarget();
-        assertEquals(cobol.getCommentLine(), "convert from base to decimal system");
+        assertEquals(cobol.getRemarks(), "remarks This program convert a value of a generic system base to a numeric value and viceversa .");
     }
 
 

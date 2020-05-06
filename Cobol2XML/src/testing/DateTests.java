@@ -9,18 +9,18 @@ import parse.tokens.TokenAssembly;
 import parse.tokens.Tokenizer;
 import static org.junit.Assert.assertEquals;
 
-public class ConstantTests {
+public class DateTests {
 
     @Test
-    public void testConstant() {
+    public void testDate() {
         Tokenizer t = CobolParser.tokenizer();
         Parser p = CobolParser.start();
-        t.setString("88  base_2                          value 2.");
+        t.setString("date-written.  07-mar-1995 - mb.");
         Assembly in = new TokenAssembly(t);
         Assembly out = p.bestMatch(in);
         Cobol c = new Cobol();
         c = (Cobol) out.getTarget();
-        assertEquals(c.getConstantName(), "base_2");
+        assertEquals(c.getMonthDateWritten(), "mar");
     }
 
 

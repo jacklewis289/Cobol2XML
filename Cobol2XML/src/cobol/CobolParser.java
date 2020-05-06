@@ -25,12 +25,7 @@ import parse.Repetition;
 import parse.Empty;
 import parse.Parser;
 import parse.Sequence;
-import parse.tokens.CaselessLiteral;
-import parse.tokens.Literal;
-import parse.tokens.Num;
-import parse.tokens.Symbol;
-import parse.tokens.Tokenizer;
-import parse.tokens.Word;
+import parse.tokens.*;
 
 public class CobolParser {
 	/**
@@ -61,10 +56,26 @@ public class CobolParser {
 
 		a.add( commentLine() );
 
+		a.add( remarks() );
+
 		a.add(new Empty());
 		return a;
 	}
 
+	private Parser remarks() {
+		Sequence s = new Sequence();
+		s.add(new CaselessLiteral("remarks"));
+		s.add(new Symbol('.').discard());
+		s.add(new Word().setAssembler(new RemarksValueAssembler()) );
+		return s;
+	}
+
+	/*
+	 * Return a parser that will recognize the grammar:
+	 *
+	 * value
+	 *
+	 */
 	private Parser constantValue() {
 		//System.out.println("constantValue()");
 		Sequence s = new Sequence();
@@ -96,7 +107,6 @@ public class CobolParser {
 		return s;
 	}
 
-
 	/*
 	 * Return a parser that will recognize the grammar:
 	 * 
@@ -110,8 +120,6 @@ public class CobolParser {
 		s.add(new Word().setAssembler(new Program_idAssembler()));
 		return s;
 	}
-
-
 
 	/*
 	 * Return a parser that will recognise the grammar:

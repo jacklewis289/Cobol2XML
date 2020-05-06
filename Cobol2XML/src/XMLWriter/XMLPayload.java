@@ -40,15 +40,12 @@ public class XMLPayload {
 	
 	public XMLPayload() {
 		try {
-		DocumentBuilderFactory dbFactory =
-		         DocumentBuilderFactory.newInstance();
-		DocumentBuilder dBuilder = 
-		            dbFactory.newDocumentBuilder();
-		doc = dBuilder.newDocument();
-		
-		 // root element
-        rootElement = doc.createElement("cobol");
-        doc.appendChild(rootElement);
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			doc = dBuilder.newDocument();
+		 	// root element
+        	rootElement = doc.createElement("cobol");
+        	doc.appendChild(rootElement);
 		
 		 } catch (Exception e) {
 	         e.printStackTrace();
@@ -58,6 +55,18 @@ public class XMLPayload {
 	
 	
 	public void addElements(Cobol c) {
+		/*
+		 * add remarksLine element
+		 */
+		String remarkLine = c.getRemarks();
+		if (remarkLine != null) {
+			this.addRemarkLineElement( remarkLine );
+			//System.out.println("Got Section");
+			// Add contents of procedure division
+		} else {
+			//System.out.println("Comment Line null");
+		}
+
 		/*
 		 * add commentLine element
 		 */
@@ -71,7 +80,7 @@ public class XMLPayload {
 		}
 
 		/*
-		 * add commentLine element
+		 * add constantValue element
 		 */
 		String constantName = c.getConstantName();
 		if (constantName != null) {
@@ -82,6 +91,8 @@ public class XMLPayload {
 		else {
 			//System.out.println("Comment Line null");
 		}
+
+
 		/*
 		 *  add sectionName element
 		 */		
@@ -191,8 +202,16 @@ public class XMLPayload {
 			rootElement.appendChild(cobolname);
 		}
 	}
- 	
- 	
+
+	void addRemarkLineElement(String stringElement) {
+		//  Comment Line element
+
+		if(stringElement != null) {
+			Element cobolname = doc.createElement("remarks");
+			cobolname.appendChild(doc.createTextNode(stringElement));
+			rootElement.appendChild(cobolname);
+		}
+	}
  	
  	void addSectionElement(String stringElement) {
 		//  Section element

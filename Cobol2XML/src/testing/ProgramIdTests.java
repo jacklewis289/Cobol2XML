@@ -7,13 +7,12 @@ import parse.Assembly;
 import parse.Parser;
 import parse.tokens.TokenAssembly;
 import parse.tokens.Tokenizer;
-
 import static org.junit.Assert.assertEquals;
 
 public class ProgramIdTests {
 
     @Test
-    public void testDivisionId() {
+    public void testProgramId() {
         Tokenizer t = CobolParser.tokenizer();
         Parser p = CobolParser.start();
         t.setString("program-id.  base.");
