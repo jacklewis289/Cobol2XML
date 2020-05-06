@@ -45,7 +45,7 @@ public class Cobol2XML {
 	 */
 	public static void main(String[] args) throws Exception {
 		System.out.println("Cobol2XML V0.1.0");
-		XMLPayload xmlp = new XMLPayload();
+		XMLPayload xmlPayload = new XMLPayload();
 		
 		/* The first command line paprameter is used to get the cobol source file namee
 		 * In case you are not sure if you are pointing toward the right file, print out the filename
@@ -58,31 +58,31 @@ public class Cobol2XML {
 		 * A rather crude approach is to hard code the filename for the cobol source file, like this
 		 * InputStream is = new FileInputStream("C:\\Users\\sgs442\\eclipse-workspace\\CobolParser1\\base.cbl");
 		 */
-		InputStream is = new FileInputStream(args[0]);
-		BufferedReader r = 	new BufferedReader(new InputStreamReader(is));
+		InputStream inputStream = new FileInputStream(args[0]);
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
-		Tokenizer t = CobolParser.tokenizer();
-		Parser p = CobolParser.start();
+		Tokenizer tokenizer = CobolParser.tokenizer();
+		Parser parser = CobolParser.start();
 		
 		// Look through source code file line by line
 		while (true) {
 			// throws IOException
-			String s = r.readLine();
-			if (s == null) {
+			String string = bufferedReader.readLine();
+			if (string == null) {
 				break;
 			}
-			t.setString(s);
-			Assembly in = new TokenAssembly(t);
-			Assembly out = p.bestMatch(in);
-			Cobol c = new Cobol();
-			c = (Cobol) out.getTarget();
+			tokenizer.setString(string);
+			Assembly in = new TokenAssembly(tokenizer);
+			Assembly out = parser.bestMatch(in);
+			Cobol cobol;
+			cobol = (Cobol) out.getTarget();
 			
-			if(c != null)
-				xmlp.addElements(c); 
+			if(cobol != null)
+				xmlPayload.addElements(cobol);
 			
 		}
-		xmlp.writeFile(args[1]);
-		r.close();
+		xmlPayload.writeFile(args[1]);
+		bufferedReader.close();
 	}
 
 }
