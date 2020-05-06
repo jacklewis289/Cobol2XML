@@ -33,41 +33,41 @@ public class CobolParser {
 	 * 
 	 * 
 	 * This parser creates a <code>COBOL</code> object
-	 * as an assembly's target.
+	 * as an assembly'sequence target.
 	 *
 	 * @return a parser that will recognize and build a 
 	 *         <object>COBOL</object> from a source code file.
 	 */
 	public Parser cobol() {
-		Alternation a = new Alternation();
+		Alternation alternation = new Alternation();
 		
 		Symbol fullstop = new Symbol('.');
 		fullstop.discard();
-		
-		a.add( ProgramID() );
-		
-		a.add( DivisionName() );
-		
-		a.add( SectionName() );
-		
-		a.add( DateWritten() );
 
-		a.add( constantValue() );
+		alternation.add( ProgramID() );
 
-		a.add( commentLine() );
+		alternation.add( DivisionName() );
 
-		a.add( remarks() );
+		alternation.add( SectionName() );
 
-		a.add(new Empty());
-		return a;
+		alternation.add( DateWritten() );
+
+		alternation.add( constantValue() );
+
+		alternation.add( commentLine() );
+
+		alternation.add( remarks() );
+
+		alternation.add(new Empty());
+		return alternation;
 	}
 
 	private Parser remarks() {
-		Sequence s = new Sequence();
-		s.add(new CaselessLiteral("remarks"));
-		s.add(new Symbol('.').discard());
-		s.add(new Word().setAssembler(new RemarksValueAssembler()) );
-		return s;
+		Sequence sequence = new Sequence();
+		sequence.add(new CaselessLiteral("remarks"));
+		sequence.add(new Symbol('.').discard());
+		sequence.add(new Word().setAssembler(new RemarksValueAssembler()) );
+		return sequence;
 	}
 
 	/*
@@ -78,13 +78,13 @@ public class CobolParser {
 	 */
 	private Parser constantValue() {
 		//System.out.println("constantValue()");
-		Sequence s = new Sequence();
-		s.add(new Num() );
-		s.add(new Word() );
-		s.add(new CaselessLiteral("value") );
-		s.add(new Num() );
-		s.setAssembler(new ConstantValueAssembler());
-		return s;
+		Sequence sequence = new Sequence();
+		sequence.add(new Num() );
+		sequence.add(new Word() );
+		sequence.add(new CaselessLiteral("value") );
+		sequence.add(new Num() );
+		sequence.setAssembler(new ConstantValueAssembler());
+		return sequence;
 	}
 
 	/*
@@ -95,16 +95,16 @@ public class CobolParser {
 	 */
 	private Parser commentLine() {
 		//System.out.println("commentLine()");
-		Sequence s = new Sequence();
-		s.add(new Symbol("*"));
-		s.add(new Symbol("*"));
-		s.add(new Symbol("*"));
-		s.add(new Symbol("-"));
-		s.add(new Symbol("-"));
-		s.add(new Symbol("-"));
-		s.add(new Word().setAssembler(new CommentLineAssembler()) );
-		//s.setAssembler(new CommentLineAssembler());
-		return s;
+		Sequence sequence = new Sequence();
+		sequence.add(new Symbol("*"));
+		sequence.add(new Symbol("*"));
+		sequence.add(new Symbol("*"));
+		sequence.add(new Symbol("-"));
+		sequence.add(new Symbol("-"));
+		sequence.add(new Symbol("-"));
+		sequence.add(new Word().setAssembler(new CommentLineAssembler()) );
+		//sequence.setAssembler(new CommentLineAssembler());
+		return sequence;
 	}
 
 	/*
@@ -114,11 +114,11 @@ public class CobolParser {
 	 *
 	 */
 	protected Parser ProgramID() {
-		Sequence s = new Sequence();
-		s.add(new CaselessLiteral("program-id") );
-		s.add(new Symbol('.').discard());	
-		s.add(new Word().setAssembler(new Program_idAssembler()));
-		return s;
+		Sequence sequence = new Sequence();
+		sequence.add(new CaselessLiteral("program-id") );
+		sequence.add(new Symbol('.').discard());	
+		sequence.add(new Word().setAssembler(new Program_idAssembler()));
+		return sequence;
 	}
 
 	/*
@@ -128,11 +128,11 @@ public class CobolParser {
 	 *
 	 */
 	protected Parser DivisionName() {
-		Sequence s = new Sequence();
-		s.add(new Word().setAssembler(new DivisionAssembler()));
-		s.add(new CaselessLiteral("division") );
-		s.add(new Symbol('.').discard());
-		return s;
+		Sequence sequence = new Sequence();
+		sequence.add(new Word().setAssembler(new DivisionAssembler()));
+		sequence.add(new CaselessLiteral("division") );
+		sequence.add(new Symbol('.').discard());
+		return sequence;
 	}
 	
 	/*
@@ -142,12 +142,12 @@ public class CobolParser {
 	 *
 	 */
 	protected Parser SectionName() {
-		Sequence s = new Sequence();
-		s.add(new Word().setAssembler(new SectionNameAssembler()));
-		s.add(new CaselessLiteral("section") );
-		s.add(new Symbol('.').discard());	
+		Sequence sequence = new Sequence();
+		sequence.add(new Word().setAssembler(new SectionNameAssembler()));
+		sequence.add(new CaselessLiteral("section") );
+		sequence.add(new Symbol('.').discard());	
 
-		return s;
+		return sequence;
 	}
 	
 	/*
@@ -157,19 +157,19 @@ public class CobolParser {
 	 *
 	 */
 	protected Parser DateWritten() {
-		Sequence s = new Sequence();
-		s.add(new CaselessLiteral("date-written") );
-		s.add(new Symbol('.').discard());
-		s.add(new Num());
-		s.add(new Symbol('-').discard());
+		Sequence sequence = new Sequence();
+		sequence.add(new CaselessLiteral("date-written") );
+		sequence.add(new Symbol('.').discard());
+		sequence.add(new Num());
+		sequence.add(new Symbol('-').discard());
 
 		//This next Word actually contains month and year (which are extracted in DateAssembler
-		s.add(new Word());
-		s.add(new Symbol('-').discard());
-		s.add(new Word().discard());
-		s.add(new Symbol('.').discard());
-		s.setAssembler(new DateAssembler());
-		return s;
+		sequence.add(new Word());
+		sequence.add(new Symbol('-').discard());
+		sequence.add(new Word().discard());
+		sequence.add(new Symbol('.').discard());
+		sequence.setAssembler(new DateAssembler());
+		return sequence;
 	}
 
 
@@ -184,15 +184,15 @@ public class CobolParser {
 
 	/**
 	 * Returns a tokenizer that does not allow spaces to appear inside
-	 * the "words" that identify cobol's grammar.
+	 * the "words" that identify cobol'sequence grammar.
 	 *
 	 * @return a tokenizer that does not allow spaces to appear inside
 	 * the "words" that identify cobol grammar.
 	 */
 	public static Tokenizer tokenizer() {
-		Tokenizer t = new Tokenizer();
-		t.wordState().setWordChars(' ', ' ', false);
-		return t;
+		Tokenizer tokenizer = new Tokenizer();
+		tokenizer.wordState().setWordChars(' ', ' ', false);
+		return tokenizer;
 	}
 
 }

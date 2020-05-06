@@ -10,7 +10,7 @@
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * MERCHANTABILITY or FITNESS FOR a PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -30,10 +30,10 @@ public class Program_idAssembler extends Assembler {
  *
  * @param   Assembly   the assembly to work on
  */
-public void workOn(Assembly a) {
-	Cobol c = new Cobol();
-	Token t = (Token) a.pop();
-	c.setProgram_ID(t.sval().trim());
-	a.setTarget(c);
+public void workOn(Assembly assembly) {
+	Cobol cobol = new Cobol();
+	Token token = (Token) assembly.pop();
+	cobol.setProgram_ID(token.sval().trim());
+	assembly.setTarget(cobol);
 }
 }

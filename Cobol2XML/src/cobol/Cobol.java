@@ -1,7 +1,7 @@
 /*
  * @(#)Cobol.java	 0.0.1
  *
- * Copyright (c) 2019 Julian M. Bass
+ * Copyright (cobol) 2019 Julian M. Bass
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -37,7 +37,6 @@ public class Cobol implements PubliclyCloneable {
 	protected String remarks;
 
 
-
 	/**
 	 * Return a copy of this object.
 	 *
@@ -56,18 +55,18 @@ public class Cobol implements PubliclyCloneable {
 	 * and relying on the first object's implementation of <code>
 	 * equals()</code>.
 	 *
-	 * @param   o1   one object
+	 * @param   object1   one object
 	 *
-	 * @param   o2   the other
+	 * @param   object2   the other
 	 *
 	 * @return  <code>true</code> if the objects are equal and
 	 *          <code>false</code> otherwise.
 	 */
-	public static boolean equal(Object o1, Object o2) {
-		if (o1 == null || o2 == null) {
-			return o1 == null && o2 == null;
+	public static boolean equal(Object object1, Object object2) {
+		if (object1 == null || object2 == null) {
+			return object1 == null && object2 == null;
 		}
-		return o1.equals(o2);
+		return object1.equals(object2);
 	}
 	/**
 	 * Compares this object against the specified object. The 
@@ -75,23 +74,23 @@ public class Cobol implements PubliclyCloneable {
 	 * not <code>null</code> and is a <code>Coffee</code> object 
 	 * whose attributes all equal this object's attributes.
 	 *
-	 * @param   o   the object to compare with.
+	 * @param   object   the object to compare with.
 	 *
 	 * @return  <code>true</code> if the objects are equal and
 	 *          <code>false</code> otherwise.
 	 */
-	public boolean equals(Object o) {
-		if (!(o instanceof Cobol)) {
+	public boolean equals(Object object) {
+		if (!(object instanceof Cobol)) {
 			return false;
 		}
-		Cobol c = (Cobol) o;
+		Cobol cobol = (Cobol) object;
 		
 		
-		if (!equal(program_id, c.program_id)) {
+		if (!equal(program_id, cobol.program_id)) {
 			return false;
 		}
 		
-		if (!equal(sectionName, c.sectionName)) {
+		if (!equal(sectionName, cobol.sectionName)) {
 			return false;
 		}
 		
@@ -174,8 +173,7 @@ public class Cobol implements PubliclyCloneable {
 		//System.out.println("setComment(): " + commentLine);
 		this.commentLine = commentLine;
 	}
-
-
+	
 
 	/**
 	 * Set the name of this cobol file.
@@ -281,13 +279,13 @@ public class Cobol implements PubliclyCloneable {
 
 
 	public String toString() {
-		StringBuffer buf = new StringBuffer();
-		buf.append(program_id);
-		buf.append(", ");
-		buf.append(divisionName);
-		buf.append(", ");
-		buf.append(sectionName);
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(program_id);
+		stringBuffer.append(", ");
+		stringBuffer.append(divisionName);
+		stringBuffer.append(", ");
+		stringBuffer.append(sectionName);
 		
-		return buf.toString();
+		return stringBuffer.toString();
 	}
 }

@@ -8,15 +8,15 @@ public class RemarksValueAssembler extends Assembler {
      * Pop a string, and set the target Remarks to this
      * string.
      *
-     * @param a the assembly to work on
+     * @param assembly the assembly to work on
      */
-    public void workOn(Assembly a) {
-        Cobol c = new Cobol();
-        Token t = (Token) a.pop();
+    public void workOn(Assembly assembly) {
+        Cobol cobol = new Cobol();
+        Token token = (Token) assembly.pop();
 
-        if (t.sval() != null) {
-            c.setRemarks(t.sval().trim() + defaultDelimiter() + a.remainder(defaultDelimiter()));
-            a.setTarget(c);
+        if (token.sval() != null) {
+            cobol.setRemarks(token.sval().trim() + defaultDelimiter() + assembly.remainder(defaultDelimiter()));
+            assembly.setTarget(cobol);
         }
     }
 

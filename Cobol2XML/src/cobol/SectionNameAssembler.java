@@ -10,7 +10,7 @@
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * MERCHANTABILITY or FITNESS FOR a PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -23,6 +23,7 @@ package cobol;
 
 import parse.*;
 import parse.tokens.*;
+
 public class SectionNameAssembler extends Assembler {
 /**
  * Pop a string, and set the target SectionName to this
@@ -30,10 +31,10 @@ public class SectionNameAssembler extends Assembler {
  *
  * @param   Assembly   the assembly to work on
  */
-public void workOn(Assembly a) {
-	Cobol c = new Cobol();
-	Token t = (Token) a.pop();
-	c.setSectionName(t.sval() );
-	a.setTarget(c);
+public void workOn(Assembly assembly) {
+	Cobol cobol = new Cobol();
+	Token token = (Token) assembly.pop();
+	cobol.setSectionName(token.sval() );
+	assembly.setTarget(cobol);
 }
 }
