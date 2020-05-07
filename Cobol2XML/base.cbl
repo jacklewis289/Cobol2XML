@@ -8,6 +8,24 @@
     <remarks>This program convert a value of a generic system base to a numeric value and viceversa .</remarks>
     <division>data</division>
     <section>working-storage</section>
+    <Variable>
+        <Variable Name="w_number"/>
+        <w_number Type="integer"/>
+        <w_number Value=""/>
+        <w_number Length="16"/>
+    </Variable>
+    <Variable>
+        <Variable Name="entry_number"/>
+        <entry_number Type="integer"/>
+        <entry_number Value=""/>
+        <entry_number Length="16"/>
+    </Variable>
+    <Variable>
+        <Variable Name="current_base"/>
+        <current_base Type="integer"/>
+        <current_base Value=""/>
+        <current_base Length="2"/>
+    </Variable>
     <Constant>
         <Constant Name="base_2"/>
         <base_2 Line_Number="88"/>
@@ -28,6 +46,12 @@
         <base_16 Line_Number="88"/>
         <base_16 Value="16.0"/>
     </Constant>
+    <String>
+        <String Name="hex_dec_data"/>
+        <hex_dec_data Type="string"/>
+        <hex_dec_data Value=""/>
+        <hex_dec_data Length="48"/>
+    </String>
     <division>procedure</division>
     <comment>convert from decimal to base system</comment>
     <comment>convert from base to dicimal system</comment>

@@ -35,6 +35,14 @@ public class Cobol implements PubliclyCloneable {
 	protected double constantValue;
 	protected int lineNumber = 0;
 	protected String remarks;
+	protected String variableName;
+	protected String variableValue;
+	protected String variableType;
+	protected int variableLength;
+	protected String stringName;
+	protected String stringValue;
+	protected String stringType;
+	protected int stringLength;
 
 
 	/**
@@ -69,9 +77,9 @@ public class Cobol implements PubliclyCloneable {
 		return object1.equals(object2);
 	}
 	/**
-	 * Compares this object against the specified object. The 
-	 * result is <code>true</code> if and only if the argument is 
-	 * not <code>null</code> and is a <code>Coffee</code> object 
+	 * Compares this object against the specified object. The
+	 * result is <code>true</code> if and only if the argument is
+	 * not <code>null</code> and is a <code>Coffee</code> object
 	 * whose attributes all equal this object's attributes.
 	 *
 	 * @param   object   the object to compare with.
@@ -84,16 +92,16 @@ public class Cobol implements PubliclyCloneable {
 			return false;
 		}
 		Cobol cobol = (Cobol) object;
-		
-		
+
+
 		if (!equal(program_id, cobol.program_id)) {
 			return false;
 		}
-		
+
 		if (!equal(sectionName, cobol.sectionName)) {
 			return false;
 		}
-		
+
 
 		return true;
 	}
@@ -107,7 +115,79 @@ public class Cobol implements PubliclyCloneable {
 		//System.out.println("getComment()");
 		return commentLine;
 	}
-	
+
+	/**
+	 * Return the variable name from this COBOL program.
+	 *
+	 * @return the variable name from this COBOL program
+	 */
+	public String getVariableName() {
+		return variableName;
+	}
+
+	/**
+	 * Return the variable value from this COBOL program.
+	 *
+	 * @return the variable value from this COBOL program
+	 */
+	public String getVariableValue() {
+		return variableValue;
+	}
+
+	/**
+	 * Return the variable type from this COBOL program.
+	 *
+	 * @return the variable type from this COBOL program
+	 */
+	public String getVariableType() {
+		return variableType;
+	}
+
+	/**
+	 * Return the variable length from this COBOL program.
+	 *
+	 * @return the variable length from this COBOL program
+	 */
+	public int getVariableLength() {
+		return variableLength;
+	}
+
+	/**
+	 * Return the string name from this COBOL program.
+	 *
+	 * @return the string name from this COBOL program
+	 */
+	public String getStringName() {
+		return stringName;
+	}
+
+	/**
+	 * Return the string value from this COBOL program.
+	 *
+	 * @return the string value from this COBOL program
+	 */
+	public String getStringValue() {
+		return stringValue;
+	}
+
+	/**
+	 * Return the string type from this COBOL program.
+	 *
+	 * @return the string type from this COBOL program
+	 */
+	public String getStringType() {
+		return stringType;
+	}
+
+	/**
+	 * Return the string length from this COBOL program.
+	 *
+	 * @return the string length from this COBOL program
+	 */
+	public int getStringLength() {
+		return stringLength;
+	}
+
 
 	/**
 	 * Return the name of this COBOL program.
@@ -135,7 +215,7 @@ public class Cobol implements PubliclyCloneable {
 	public String getDivisionName() {
 		return divisionName;
 	}
-	
+
 	/**
 	 * Return the dayDateWritten of this COBOL program.
 	 *
@@ -145,7 +225,7 @@ public class Cobol implements PubliclyCloneable {
 		return dayDateWritten;
 	}
 
-	
+
 	/**
 	 * Return the monthWritten of this COBOL program.
 	 *
@@ -154,7 +234,7 @@ public class Cobol implements PubliclyCloneable {
 	public String getMonthDateWritten() {
 		return monthDateWritten;
 	}
-	
+
 	/**
 	 * Return the dayDateWritten of this COBOL program.
 	 *
@@ -163,7 +243,7 @@ public class Cobol implements PubliclyCloneable {
 	public int getYearDateWritten() {
 		return yearDateWritten;
 	}
-	
+
 	/**
 	 * Set a line of commented text from the COBOL program.
 	 *
@@ -173,7 +253,78 @@ public class Cobol implements PubliclyCloneable {
 		//System.out.println("setComment(): " + commentLine);
 		this.commentLine = commentLine;
 	}
-	
+
+	/**
+	 * Set a variable name from the COBOL program.
+	 *
+	 * @param String variableName
+	 */
+	public void setVariableName(String variableName) {
+		this.variableName = variableName;
+	}
+
+	/**
+	 * Set a variable value from the COBOL program.
+	 *
+	 * @param String variableValue
+	 */
+	public void setVariableValue(String variableValue) {
+		this.variableValue = variableValue;
+	}
+
+	/**
+	 * Set a variable type from the COBOL program.
+	 *
+	 * @param String variableType
+	 */
+	public void setVariableType(String variableType) {
+		this.variableType = variableType;
+	}
+
+	/**
+	 * Set a variable length from the COBOL program.
+	 *
+	 * @param int variableLength
+	 */
+	public void setVariableLength(int variableLength) {
+		this.variableLength = variableLength;
+	}
+
+	/**
+	 * Set a string name from the COBOL program.
+	 *
+	 * @param String stringName
+	 */
+	public void setStringName(String stringName) {
+		this.stringName = stringName;
+	}
+
+	/**
+	 * Set a string value from the COBOL program.
+	 *
+	 * @param String stringValue
+	 */
+	public void setStringValue(String stringValue) {
+		this.stringValue = stringValue;
+	}
+
+	/**
+	 * Set a string type from the COBOL program.
+	 *
+	 * @param String stringType
+	 */
+	public void setStringType(String stringType) {
+		this.stringType = stringType;
+	}
+
+	/**
+	 * Set a string length from the COBOL program.
+	 *
+	 * @param int stringLength
+	 */
+	public void setStringLength(int stringLength) {
+		this.stringLength = stringLength;
+	}
 
 	/**
 	 * Set the name of this cobol file.
@@ -192,7 +343,7 @@ public class Cobol implements PubliclyCloneable {
 	public void setDayDateWritten(int dayDateWritten) {
 		this.dayDateWritten = dayDateWritten;
 	}
-	
+
 	/**
 	 * Return the monthWritten of this COBOL program.
 	 *
@@ -201,7 +352,7 @@ public class Cobol implements PubliclyCloneable {
 	public void setMonthDateWritten(String monthDateWritten) {
 		this.monthDateWritten = monthDateWritten;
 	}
-	
+
 	/**
 	 * Set the yearDateWritten of this COBOL program.
 	 *
@@ -210,19 +361,19 @@ public class Cobol implements PubliclyCloneable {
 	public void setYearDateWritten(int yearDateWritten) {
 		this.yearDateWritten = yearDateWritten;
 	}
-	
+
 
 	/**
-	 * Set the section name 
+	 * Set the section name
 	 *
 	 * @param  String sectionName
 	 */
 	public void setSectionName(String sectionName) {
 		this.sectionName = sectionName;
 	}
-	
+
 	/**
-	 * Set the division name 
+	 * Set the division name
 	 *
 	 * @param  String divisionName
 	 */
@@ -272,7 +423,7 @@ public class Cobol implements PubliclyCloneable {
 
 	/**
 	 * Return a textual description of this cobol type.
-	 * 
+	 *
 	 * @return a textual description of this cobol type
 	 */
 
@@ -285,7 +436,7 @@ public class Cobol implements PubliclyCloneable {
 		stringBuffer.append(divisionName);
 		stringBuffer.append(", ");
 		stringBuffer.append(sectionName);
-		
+
 		return stringBuffer.toString();
 	}
 }

@@ -30,17 +30,17 @@ import parse.tokens.*;
 public class CobolParser {
 	/**
 	 * Return a parser that will recognize the selected COBOL source code constructs:
-	 * 
-	 * 
+	 *
+	 *
 	 * This parser creates a <code>COBOL</code> object
 	 * as an assembly'sequence target.
 	 *
-	 * @return a parser that will recognize and build a 
+	 * @return a parser that will recognize and build a
 	 *         <object>COBOL</object> from a source code file.
 	 */
 	public Parser cobol() {
 		Alternation alternation = new Alternation();
-		
+
 		Symbol fullstop = new Symbol('.');
 		fullstop.discard();
 
@@ -58,8 +58,36 @@ public class CobolParser {
 
 		alternation.add( remarks() );
 
+		alternation.add( variable() );
+
+		alternation.add( string() );
+
 		alternation.add(new Empty());
 		return alternation;
+	}
+
+	private Parser string() {
+		Sequence sequence = new Sequence();
+		sequence.add(new Num());
+		sequence.add(new Word());
+		sequence.add(new CaselessLiteral("pic"));
+		sequence.add(new Word());
+		sequence.add(new Symbol('('));
+		sequence.add(new Num());
+		sequence.setAssembler(new StringAssembler());
+		return sequence;
+	}
+
+	private Parser variable() {
+		Sequence sequence = new Sequence();
+		sequence.add(new Num());
+		sequence.add(new Word());
+		sequence.add(new CaselessLiteral("pic"));
+		sequence.add(new Num());
+		sequence.add(new Symbol('('));
+		sequence.add(new Num());
+		sequence.setAssembler(new VariableAssembler());
+		return sequence;
 	}
 
 	private Parser remarks() {
@@ -109,21 +137,21 @@ public class CobolParser {
 
 	/*
 	 * Return a parser that will recognize the grammar:
-	 * 
+	 *
 	 *    Program Identifier = Word;
 	 *
 	 */
 	protected Parser ProgramID() {
 		Sequence sequence = new Sequence();
 		sequence.add(new CaselessLiteral("program-id") );
-		sequence.add(new Symbol('.').discard());	
+		sequence.add(new Symbol('.').discard());
 		sequence.add(new Word().setAssembler(new Program_idAssembler()));
 		return sequence;
 	}
 
 	/*
 	 * Return a parser that will recognise the grammar:
-	 * 
+	 *
 	 *    <divisionName> division;
 	 *
 	 */
@@ -134,10 +162,10 @@ public class CobolParser {
 		sequence.add(new Symbol('.').discard());
 		return sequence;
 	}
-	
+
 	/*
 	 * Return a parser that will recognize the grammar:
-	 * 
+	 *
 	 *    Program Identifier = Word;
 	 *
 	 */
@@ -145,14 +173,14 @@ public class CobolParser {
 		Sequence sequence = new Sequence();
 		sequence.add(new Word().setAssembler(new SectionNameAssembler()));
 		sequence.add(new CaselessLiteral("section") );
-		sequence.add(new Symbol('.').discard());	
+		sequence.add(new Symbol('.').discard());
 
 		return sequence;
 	}
-	
+
 	/*
 	 * Return a parser that will recognise the grammar:
-	 * 
+	 *
 	 *    working-storage section;
 	 *
 	 */

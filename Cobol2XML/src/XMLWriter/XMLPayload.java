@@ -39,24 +39,38 @@ import org.w3c.dom.Element;
 public class XMLPayload {
 	Document document;
 	Element rootElement;
-	
+
 	public XMLPayload() {
 		try {
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			document = dBuilder.newDocument();
-		 	// root element
-        	rootElement = document.createElement("cobol");
-        	document.appendChild(rootElement);
-		
-		 } catch (Exception e) {
-	         e.printStackTrace();
-	     }
-		
+			// root element
+			rootElement = document.createElement("cobol");
+			document.appendChild(rootElement);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
-	
-	
+
+
 	public void addElements(Cobol cobol) {
+		/*
+		 * add string element
+		 */
+		String stringName = cobol.getStringName();
+		if (stringName != null) {
+			this.addStringLineElement( stringName, cobol.getStringValue(), cobol.getStringType(), cobol.getStringLength() );
+		} else { }
+		/*
+		 * add variable element
+		 */
+		String variableName = cobol.getVariableName();
+		if (variableName != null) {
+			this.addVariableLineElement( variableName, cobol.getVariableValue(), cobol.getVariableType(), cobol.getVariableLength() );
+		} else { }
 		/*
 		 * add remarksLine element
 		 */
@@ -75,10 +89,10 @@ public class XMLPayload {
 		String commentLine = cobol.getCommentLine();
 		if (commentLine != null) {
 			this.addCommentLineElement( commentLine );
-		//System.out.println("Got Section");
-		// Add contents of procedure division
+			//System.out.println("Got Section");
+			// Add contents of procedure division
 		} else {
-		//System.out.println("Comment Line null");
+			//System.out.println("Comment Line null");
 		}
 
 		/*
@@ -97,7 +111,7 @@ public class XMLPayload {
 
 		/*
 		 *  add sectionName element
-		 */		
+		 */
 		String sectionName = cobol.getSectionName();
 		if (sectionName != null) {
 			this.addSectionElement( sectionName );
@@ -106,10 +120,10 @@ public class XMLPayload {
 		} else {
 			//System.out.println("Section Name null");
 		}
-		
+
 		/*
 		 *  add divisionName element
-		 */		
+		 */
 		String divisionName = cobol.getDivisionName();
 		if (divisionName != null) {
 			this.addDivisionElement( divisionName );
@@ -118,10 +132,10 @@ public class XMLPayload {
 		} else {
 			//System.out.println("Division Name null");
 		}
-		
+
 		/*
 		 *  add ProgramID element
-		 */		
+		 */
 		String programIDName = cobol.getProgram_ID();
 		if (programIDName != null) {
 			this.addProgram_IDElement( programIDName );
@@ -130,16 +144,16 @@ public class XMLPayload {
 		} else {
 			//System.out.println("Section Name null");
 		}
-		
+
 		/*
 		 *  add DateWritten element
-		 */	
+		 */
 		// DayDateWritten
 		int dayDateWritten = cobol.getDayDateWritten();
 		if(dayDateWritten != 0) {
 			this.addDayDateWrittenElement( dayDateWritten );
 		}
-		
+
 		//MonthDateWritten
 		String monthDateWritten = cobol.getMonthDateWritten();
 		if (monthDateWritten != null) {
@@ -159,45 +173,48 @@ public class XMLPayload {
 	}
 
 	private void addConstantValueElement(String constantName, double constantValue, int lineNumber) {
-			// Program ID element
-			if(constantName != null) {
-				Element cobolname = document.createElement("Constant");
-				// insert name of constant into XML file
-				Element constID = document.createElement("Constant");
-				Attr attrType2 = document.createAttribute("Name" );
-				attrType2.setValue( constantName );
-				constID.setAttributeNode(attrType2);
-				cobolname.appendChild(constID);
-				// insert line number of constant into XML file
-				Element lineID = document.createElement(constantName);
-				Attr attrType = document.createAttribute("Line_Number" );
-				attrType.setValue( Integer.toString(lineNumber) );
-				lineID.setAttributeNode(attrType);
-				cobolname.appendChild(lineID);
-				// insert value of constant into XML file
-				Element constantID = document.createElement(constantName);
-				Attr attrType1 = document.createAttribute("Value" );
-				attrType1.setValue( Double.toString(constantValue) );
-				constantID.setAttributeNode(attrType1);
-				cobolname.appendChild(constantID);
-				rootElement.appendChild(cobolname);
-			}
+		// Program ID element
+		if(constantName != null) {
+			Element cobolname = document.createElement("Constant");
+			// insert name of constant into XML file
+			Element constID = document.createElement("Constant");
+			Attr attrType2 = document.createAttribute("Name" );
+			attrType2.setValue( constantName );
+			constID.setAttributeNode(attrType2);
+			cobolname.appendChild(constID);
+
+			// insert line number of constant into XML file
+			Element lineID = document.createElement(constantName);
+			Attr attrType = document.createAttribute("Line_Number" );
+			attrType.setValue( Integer.toString(lineNumber) );
+			lineID.setAttributeNode(attrType);
+			cobolname.appendChild(lineID);
+
+			// insert value of constant into XML file
+			Element constantID = document.createElement(constantName);
+			Attr attrType1 = document.createAttribute("Value" );
+			attrType1.setValue( Double.toString(constantValue) );
+			constantID.setAttributeNode(attrType1);
+			cobolname.appendChild(constantID);
+
+			rootElement.appendChild(cobolname);
 		}
+	}
 
 
 	void addProgram_IDElement(String stringElement) {
 		//  Program ID element
-		
+
 		if(stringElement != null) {
 			Element cobolname = document.createElement("Program-ID");
 			cobolname.appendChild(document.createTextNode(stringElement));
 			rootElement.appendChild(cobolname);
 		}
 	}
- 	
+
 	void addCommentLineElement(String stringElement) {
 		//  Comment Line element
-		
+
 		if(stringElement != null) {
 			Element cobolname = document.createElement("comment");
 			cobolname.appendChild(document.createTextNode(stringElement));
@@ -214,18 +231,88 @@ public class XMLPayload {
 			rootElement.appendChild(cobolname);
 		}
 	}
- 	
- 	void addSectionElement(String stringElement) {
+
+	void addVariableLineElement(String variableName, String variableValue, String variableType, int variableLength) {
+		//  Comment Line element
+		if(variableName != null && variableType != null && variableLength != 0) {
+			if(!variableName.isEmpty() && !variableType.isEmpty()) {
+				Element cobolname = document.createElement("Variable");
+
+				Element varID = document.createElement("Variable");
+				Attr attrType = document.createAttribute("Name" );
+				attrType.setValue( variableName );
+				varID.setAttributeNode(attrType);
+				cobolname.appendChild(varID);
+
+				Element typeID = document.createElement("" + variableName);
+				Attr attrType1 = document.createAttribute("Type" );
+				attrType1.setValue( variableType );
+				typeID.setAttributeNode(attrType1);
+				cobolname.appendChild(typeID);
+
+				Element valueID = document.createElement("" + variableName);
+				Attr attrType2 = document.createAttribute("Value" );
+				attrType2.setValue( variableValue );
+				valueID.setAttributeNode(attrType2);
+				cobolname.appendChild(valueID);
+
+				Element lengthID = document.createElement("" + variableName);
+				Attr attrType3 = document.createAttribute("Length" );
+				attrType3.setValue( Integer.toString(variableLength) );
+				lengthID.setAttributeNode(attrType3);
+				cobolname.appendChild(lengthID);
+
+				rootElement.appendChild(cobolname);
+			}
+		}
+	}
+
+	void addStringLineElement(String stringName, String stringValue, String stringType, int stringLength) {
+		//  Comment Line element
+		if(stringName != null && stringType != null && stringLength != 0) {
+			if(!stringName.isEmpty() && !stringType.isEmpty()) {
+				Element cobolname = document.createElement("String");
+
+				Element stringID = document.createElement("String");
+				Attr attrType = document.createAttribute("Name" );
+				attrType.setValue( stringName );
+				stringID.setAttributeNode(attrType);
+				cobolname.appendChild(stringID);
+
+				Element typeID = document.createElement("" + stringName);
+				Attr attrType1 = document.createAttribute("Type" );
+				attrType1.setValue( stringType );
+				typeID.setAttributeNode(attrType1);
+				cobolname.appendChild(typeID);
+
+				Element valueID = document.createElement("" + stringName);
+				Attr attrType2 = document.createAttribute("Value" );
+				attrType2.setValue( stringValue );
+				valueID.setAttributeNode(attrType2);
+				cobolname.appendChild(valueID);
+
+				Element lengthID = document.createElement("" + stringName);
+				Attr attrType3 = document.createAttribute("Length" );
+				attrType3.setValue( Integer.toString(stringLength) );
+				lengthID.setAttributeNode(attrType3);
+				cobolname.appendChild(lengthID);
+
+				rootElement.appendChild(cobolname);
+			}
+		}
+	}
+
+	void addSectionElement(String stringElement) {
 		//  Section element
-		
+
 		if(stringElement != null) {
 			Element cobolname = document.createElement("section");
 			cobolname.appendChild(document.createTextNode(stringElement));
 			rootElement.appendChild(cobolname);
 		}
 	}
- 	
- 	void addDivisionElement(String stringElement) {
+
+	void addDivisionElement(String stringElement) {
 		//  Division element
 		if(stringElement != null) {
 			Element cobolname = document.createElement("division");
@@ -233,10 +320,10 @@ public class XMLPayload {
 			rootElement.appendChild(cobolname);
 		}
 	}
-	
+
 	void addDayDateWrittenElement(int intElement) {
 		//  DayDateWritten element
-		
+
 		if(intElement != 0) {
 			Element cobolname = document.createElement("day-date-written");
 			String s = "" + intElement;
@@ -244,10 +331,10 @@ public class XMLPayload {
 			rootElement.appendChild(cobolname);
 		}
 	}
- 	
+
 	void addMonthDateWrittenElement(String stringElement) {
 		//  MonthWritten element
-		
+
 		if(stringElement != null) {
 			Element cobolname = document.createElement("month-date-written");
 			cobolname.appendChild(document.createTextNode(stringElement));
@@ -257,7 +344,7 @@ public class XMLPayload {
 
 	void addYearDateWrittenElement(int intElement) {
 		//  YearDateWritten element
-		
+
 		if(intElement != 0) {
 			Element cobolname = document.createElement("year-date-written");
 			String s = "" + intElement;
@@ -265,30 +352,30 @@ public class XMLPayload {
 			rootElement.appendChild(cobolname);
 		}
 	}
-	
+
 	public void writeFile(String filename) {
 		try {
-		// write the content into xml file
-		// System.out.println("WriteFile Filename: " + filename);
-        TransformerFactory transformerFactory =
-        TransformerFactory.newInstance();
-        Transformer transformer =
-        transformerFactory.newTransformer();
-        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        DOMSource source = new DOMSource(document);
-        
-        StreamResult result =
-                new StreamResult(new File(filename));
-        transformer.transform(source, result);
-        
-        // Output to console for testing
-        StreamResult consoleResult = new StreamResult(System.out);
-        transformer.transform(source, consoleResult);
-        
-		 } catch (Exception e) {
-	         e.printStackTrace();
-	     }
+			// write the content into xml file
+			// System.out.println("WriteFile Filename: " + filename);
+			TransformerFactory transformerFactory =
+					TransformerFactory.newInstance();
+			Transformer transformer =
+					transformerFactory.newTransformer();
+			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			DOMSource source = new DOMSource(document);
+
+			StreamResult result =
+					new StreamResult(new File(filename));
+			transformer.transform(source, result);
+
+			// Output to console for testing
+			StreamResult consoleResult = new StreamResult(System.out);
+			transformer.transform(source, consoleResult);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
