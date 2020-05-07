@@ -21,7 +21,7 @@ public class RemarksTests {
         Assembly out = parser.bestMatch(in);
         Cobol cobol;
         cobol = (Cobol) out.getTarget();
-        assertEquals(cobol.getRemarks(), "remarks This program convert a value of a generic system base to a numeric value and viceversa .");
+        assertEquals(cobol.getRemarks(), "This program convert a value of a generic system base to a numeric value and viceversa .");
     }
 
 
