@@ -13,14 +13,14 @@ public class DateTests {
 
     @Test
     public void testDate() {
-        Tokenizer t = CobolParser.tokenizer();
-        Parser p = CobolParser.start();
-        t.setString("date-written.  07-mar-1995 - mb.");
-        Assembly in = new TokenAssembly(t);
-        Assembly out = p.bestMatch(in);
-        Cobol c = new Cobol();
-        c = (Cobol) out.getTarget();
-        assertEquals(c.getMonthDateWritten(), "mar");
+        Tokenizer tokenizer = CobolParser.tokenizer();
+        Parser parser = CobolParser.start();
+        tokenizer.setString("date-written.  07-mar-1995 - mb.");
+        Assembly in = new TokenAssembly(tokenizer);
+        Assembly out = parser.bestMatch(in);
+        Cobol cobol = new Cobol();
+        cobol = (Cobol) out.getTarget();
+        assertEquals(cobol.getMonthDateWritten(), "mar");
     }
 
 

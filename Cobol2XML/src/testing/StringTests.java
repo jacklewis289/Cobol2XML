@@ -7,21 +7,22 @@ import parse.Assembly;
 import parse.Parser;
 import parse.tokens.TokenAssembly;
 import parse.tokens.Tokenizer;
+
 import static org.junit.Assert.assertEquals;
 
-public class DivisionTests {
+public class StringTests {
 
     @Test
-    public void testDivisionId() {
+    public void testStrings() {
         Tokenizer tokenizer = CobolParser.tokenizer();
         Parser parser = CobolParser.start();
-        tokenizer.setString("identification division.");
+        tokenizer.setString("01  hex_dec_data                        pic x(48) value 000101202303404505606707808909A10B11C12D13E14F15.");
         Assembly in = new TokenAssembly(tokenizer);
         Assembly out = parser.bestMatch(in);
         Cobol cobol = new Cobol();
         cobol = (Cobol) out.getTarget();
-        assertEquals(cobol.getDivisionName(), "identification");
+        assertEquals(cobol.getStringName(), "hex_dec_data");
+        assertEquals(cobol.getStringLength(), 48);
     }
-
 
 }

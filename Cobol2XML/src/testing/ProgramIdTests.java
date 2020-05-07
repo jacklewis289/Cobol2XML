@@ -13,14 +13,14 @@ public class ProgramIdTests {
 
     @Test
     public void testProgramId() {
-        Tokenizer t = CobolParser.tokenizer();
-        Parser p = CobolParser.start();
-        t.setString("program-id.  base.");
-        Assembly in = new TokenAssembly(t);
-        Assembly out = p.bestMatch(in);
-        Cobol c = new Cobol();
-        c = (Cobol) out.getTarget();
-        assertEquals(c.getProgram_id(), "base");
+        Tokenizer tokenizer = CobolParser.tokenizer();
+        Parser parser = CobolParser.start();
+        tokenizer.setString("program-id.  base.");
+        Assembly in = new TokenAssembly(tokenizer);
+        Assembly out = parser.bestMatch(in);
+        Cobol cobol = new Cobol();
+        cobol = (Cobol) out.getTarget();
+        assertEquals(cobol.getProgram_id(), "base");
     }
 
 

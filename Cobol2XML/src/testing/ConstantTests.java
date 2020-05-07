@@ -13,14 +13,14 @@ public class ConstantTests {
 
     @Test
     public void testConstant() {
-        Tokenizer t = CobolParser.tokenizer();
-        Parser p = CobolParser.start();
-        t.setString("88  base_2                          value 2.");
-        Assembly in = new TokenAssembly(t);
-        Assembly out = p.bestMatch(in);
-        Cobol c = new Cobol();
-        c = (Cobol) out.getTarget();
-        assertEquals(c.getConstantName(), "base_2");
+        Tokenizer tokenizer = CobolParser.tokenizer();
+        Parser parser = CobolParser.start();
+        tokenizer.setString("88  base_2                          value 2.");
+        Assembly in = new TokenAssembly(tokenizer);
+        Assembly out = parser.bestMatch(in);
+        Cobol cobol = new Cobol();
+        cobol = (Cobol) out.getTarget();
+        assertEquals(cobol.getConstantName(), "base_2");
     }
 
 
